@@ -43,8 +43,6 @@ def create_app(test_config=None):
     @app.route('/actors', methods=['GET'])
     def GetActors():
         actors = Actor.query.all()
-        if not actors:
-            abort(404)
         return jsonify({
             'success': True,
             'actors': [actor.format() for actor in actors]
