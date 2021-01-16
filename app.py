@@ -31,12 +31,12 @@ def create_app(test_config=None):
     #------------------------------------------\
 
     #Routes(Endpoints)-------------------------/
-
+    #general end point
     @app.route('/')
     def index():
         return jsonify({
             "success": True,
-            "Project": "hii",
+            "Project": "Hello , This is the last FSND project .. ! wooho o o  o",
         })
 
     #----1:GET /actors and /movies
