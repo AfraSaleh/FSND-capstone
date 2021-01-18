@@ -10,6 +10,7 @@
 #Endpoins:
 - GET /actors and /movies
 http://127.0.0.1:5000/actors 
+```json
 {
     "actors": [
         {
@@ -27,7 +28,9 @@ http://127.0.0.1:5000/actors
     ],
     "success": true
 }
+```
 http://127.0.0.1:5000/movies
+```json
 {
     "movies": [
         {
@@ -48,21 +51,27 @@ http://127.0.0.1:5000/movies
     ],
     "success": true
 }
+```
 - DELETE /actors/ and /movies
 http://127.0.0.1:5000/actors/4
+```json
 {
     "actor_id": 4,
     "message": "Actor info has been Deleted successfully",
     "success": true
 }
+```
 http://127.0.0.1:5000/movies/2
+```
 {
     "message": "Movie info has been Deleted successfully",
     "movie_id": 2,
     "success": true
 }
+```
 - POST /actors and /movies
 http://127.0.0.1:5000/actors/create
+```json
 {
     "created": 7,
     "message": "New Actor has been created successfully",
@@ -74,7 +83,9 @@ http://127.0.0.1:5000/actors/create
     },
     "success": true
 }
+```
 http://127.0.0.1:5000/movies/create
+```json
 {
     "created": 4,
     "message": "New Movie has been created successfully",
@@ -85,21 +96,26 @@ http://127.0.0.1:5000/movies/create
     },
     "success": true
 }
+```
 - PATCH /actors/ and /movies
 http://127.0.0.1:5000/actors/update/7
+```json
 {
     "message": "Actor info has been Updated successfully",
     "success": true
 }
+```
 http://127.0.0.1:5000/movies/patch/3
+```json
 {
     "message": "Movie info has been Updated successfully",
     "success": true
 }
-
+```
 #ErrorHandling:
 ________________
 - 401
+```json
 {
 	"success": False,
 	"error": 401,
@@ -120,6 +136,7 @@ ________________
     "message": "Request could not be processed."
 }
 ________________
+```
 
 # Access project in Heroku URL:
 ( https://afrafsnd.herokuapp.com/ )
