@@ -51,8 +51,6 @@ def create_app(test_config=None):
     @app.route('/movies', methods=['GET'])
     def GetMovies():
         movies = Movie.query.all()
-        if not movies:
-            abort(404)
         return jsonify({
             'success': True,
             'movies': [movie.format() for movie in movies]

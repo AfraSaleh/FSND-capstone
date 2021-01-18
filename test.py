@@ -23,21 +23,27 @@ class CapstoneTestCase(unittest.TestCase):
     def tearDown(self):
         pass
 #-----------------------------------------
+    #################################################
     def TestGetActors(self):
         respo = self.client().get('/actors')
         data = json.loads(respo.data)
         self.assertEqual(respo.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertTrue(len(data['actors']))
-    def TestDeleteActors(self):
-        actors = Actor(name="afraa", age="23", gender="female")
-        actors.insert()
-        actor_id = actors.id
-        respo = self.client().delete(f'/actors/{actor_id}')
+    def TestRefuseGetAtors(self):
+        respo = self.client().post('/actors')
+        self.assertEqual(respo.status_code, 405)
+    #################################################
+    def TestGetMovies(self):
+        respo = self.client().get('/movies')
         data = json.loads(respo.data)
         self.assertEqual(respo.status_code, 200)
-        self.assertTrue(data['success'])
-        self.assertEqual(data['actor_id'], actors.id)  
+        self.assertEqual(data['success'], True)
+        self.assertTrue(len(data['movies']))
+    def TestRefuseGetMovies(self):
+        respo = self.client().post('/Movies')
+        self.assertEqual(respo.status_code, 405)
+    #################################################
     def TestPostActor(self):
         NewActor = {
             "name": "sara",
@@ -52,7 +58,41 @@ class CapstoneTestCase(unittest.TestCase):
         self.assertEqual(data['actors']['age'], NewActor['age'])
         self.assertEqual(data['actors']['gender'], NewActor['gender'])
         newactor = Actor.query.get(data['actors']['id'])
-        self.assertTrue(newactor)
+        self.assertTrue(newactor) 
+    def TestRefuseCreateNewActor(self):
+        NewActor = {
+            "gender": "female",
+            "age" : 33
+        } 
+        respo = self.client().post('/actors/create', data=json.dumps(NewActor), headers={'Content-Type': 'application/json'})
+        data = json.loads(respo.data)
+        self.assertEqual(respo.status_code, 422)
+        self.assertEqual(data['error'], 422)
+        self.assertFalse(data['success'])
+    #################################################
+    def TestPostMovies(self):
+        NewMovie = {
+            "title": "new movie posted",
+            "releasedate": "30-12-2020"
+        } 
+        respo = self.client().post('/movies/create', data=json.dumps(NewMovie), headers={'Content-Type': 'application/json'})
+        data = json.loads(respo.data)
+        self.assertEqual(respo.status_code, 200)
+        self.assertTrue(data['success'])
+        self.assertEqual(data['movies']['title'], NewMovie['title'])
+        self.assertEqual(data['movies']['releasedate'], NewMovie['releasedate'])
+        newmovie = Actor.query.get(data['movies']['id'])
+        self.assertTrue(newmovie)
+    def TestRefuseCreateNewMovie(self):
+        NewMovie = {
+            "releasedate": "30-12-2021"
+        } 
+        respo = self.client().post('/movies/create', data=json.dumps(NewMovie), headers={'Content-Type': 'application/json'})
+        data = json.loads(respo.data)
+        self.assertEqual(respo.status_code, 422)
+        self.assertEqual(data['error'], 422)
+        self.assertFalse(data['success'])
+    #################################################
     def TestUpdateActor(self):
         actors = Actor(name="mohammed", age="50", gender="male")
         actors.insert()
@@ -68,13 +108,7 @@ class CapstoneTestCase(unittest.TestCase):
         self.assertEqual(data['actors']['gender'], actor.gender)
         actorupdated = Actor.query.get(data['actors']['id'])
         self.assertEqual(actorupdated.id, actors.id)
-    def TestDelete_Notfound_Actor(self):
-        respo = self.client().delete('/actors/455010')
-        data = json.loads(respo.data)
-        self.assertEqual(respo.status_code, 404)
-        self.assertEqual(data['error'], 404)
-        self.assertFalse(data['success'])
-    def TestUpdate_Notfound_Actor(self):
+    def TestRefuseUpdateActor(self):
         updatedData = {
             "name": 'abdullah',
             "age": 28
@@ -84,43 +118,23 @@ class CapstoneTestCase(unittest.TestCase):
         self.assertEqual(respo.status_code, 404)
         self.assertEqual(data['error'], 404)
         self.assertFalse(data['success'])
-    def TestDeleteAcotr_ExecutiveProducertoken(self):
-        respo = self.client().delete('/actors/8', headers={'Authorization': "Bearer {}".format(self.ExecutiveProducer_token)})
-        data = json.loads(respo.data)
-        self.assertEqual(respo.status_code, 401)
-        self.assertFalse(data["success"])
-        self.assertIn('message', data) 
-
-
-  #------------------------------------------
-    def TestGetMovies(self):
-        respo = self.client().get('/movies')
-        data = json.loads(respo.data)
-        self.assertEqual(respo.status_code, 200)
-        self.assertEqual(data['success'], True)
-        self.assertTrue(len(data['movies'])) 
-    def TestDeleteMovies(self):
-        movies = Movie(title="its a movie title", releasedate="20-10-2018")
-        movies.insert()
-        movie_id = movies.id
-        respo = self.client().delete(f'/movies/{movie_id}')
+    #################################################
+    def TestDeleteActors(self):
+        actors = Actor(name="afraa", age="23", gender="female")
+        actors.insert()
+        actor_id = actors.id
+        respo = self.client().delete(f'/actors/{actor_id}')
         data = json.loads(respo.data)
         self.assertEqual(respo.status_code, 200)
         self.assertTrue(data['success'])
-        self.assertEqual(data['movie_id'], movies.id)  
-    def TestPostMovies(self):
-        NewMovie = {
-            "title": "new movie posted",
-            "releasedate": "30-12-2020"
-        } 
-        respo = self.client().post('/movies/create', data=json.dumps(NewMovie), headers={'Content-Type': 'application/json'})
+        self.assertEqual(data['actor_id'], actors.id)  
+    def TestRefuseDeleteActor(self):
+        respo = self.client().delete('/actors/455010')
         data = json.loads(respo.data)
-        self.assertEqual(respo.status_code, 200)
-        self.assertTrue(data['success'])
-        self.assertEqual(data['movies']['title'], NewMovie['title'])
-        self.assertEqual(data['movies']['releasedate'], NewMovie['releasedate'])
-        newmovie = Actor.query.get(data['movies']['id'])
-        self.assertTrue(newmovie)
+        self.assertEqual(respo.status_code, 404)
+        self.assertEqual(data['error'], 404)
+        self.assertFalse(data['success'])
+    #################################################
     def TestUpdateMovies(self):
         movies = Actor(title="old movie", releasedate="10-11-2012")
         movies.insert()
@@ -141,7 +155,7 @@ class CapstoneTestCase(unittest.TestCase):
         self.assertEqual(respo.status_code, 404)
         self.assertEqual(data['error'], 404)
         self.assertFalse(data['success'])
-    def TestUpdate_Notfound_Movie(self):
+    def TestRefuseUpdateMovie(self):
         updatedData = {
             "title": 'OoOoOoOoOoOo'
         } 
@@ -150,12 +164,35 @@ class CapstoneTestCase(unittest.TestCase):
         self.assertEqual(respo.status_code, 404)
         self.assertEqual(data['error'], 404)
         self.assertFalse(data['success']) 
-    def TestDeleteMovie_ExecutiveProducertoken(self):
+    #################################################
+    def TestDeleteMovies(self):
+        movies = Movie(title="its a movie title", releasedate="20-10-2018")
+        movies.insert()
+        movie_id = movies.id
+        respo = self.client().delete(f'/movies/{movie_id}')
+        data = json.loads(respo.data)
+        self.assertEqual(respo.status_code, 200)
+        self.assertTrue(data['success'])
+        self.assertEqual(data['movie_id'], movies.id)
+    def TestRefuseDeleteMovies(self):
+        respo = self.client().delete('/movies/9999')
+        data = json.loads(respo.data)
+        self.assertEqual(respo.status_code, 404)
+        self.assertEqual(data['error'], 404)
+        self.assertFalse(data['success'])
+    #################################################
+    def TestDeleteAcotr_ExecutiveProducertoken(self):
+        respo = self.client().delete('/actors/8', headers={'Authorization': "Bearer {}".format(self.ExecutiveProducer_token)})
+        data = json.loads(respo.data)
+        self.assertEqual(respo.status_code, 401)
+        self.assertFalse(data["success"])
+        self.assertIn('message', data)
+      def TestDeleteMovie_ExecutiveProducertoken(self):
         respo = self.client().delete('/movies/1', headers={'Authorization': "Bearer {}".format(self.ExecutiveProducer_token)})
         data = json.loads(respo.data)
         self.assertEqual(respo.status_code, 401)
         self.assertFalse(data["success"])
-        self.assertIn('message', data) 
+        self.assertIn('message', data)  
 
 #---------------------------------------------------/
 if __name__ == "__main__":
