@@ -5,8 +5,6 @@ import json
 
 
 database_path = os.environ['DATABASE_URL']
-
-
 db = SQLAlchemy()
 
 def setup_db(app, database_path=database_path):
@@ -17,15 +15,16 @@ def setup_db(app, database_path=database_path):
     db.create_all()
 
 #Create Movie table in db-------------------------------------/
+
 class Movie(db.Model):
     __tablename__ = 'movies'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
-    releasedate = db.Column(db.DateTime())
+    release_date = db.Column(db.DateTime())
 
-    def __init__(self, title, releasedate):
+    def __init__(self, title, release_date):
         self.title = title
-        self.releasedate = releasedate
+        self.release_date = release_date
        
     def insert(self):
         db.session.add(self)
@@ -39,7 +38,7 @@ class Movie(db.Model):
         return {
         'id': self.id,
         'title': self.title,
-        'releasedate': self.releasedate
+        'releasedate': self.release_date
         }
 
 #Create Actor table in db-------------------------------------/

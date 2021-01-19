@@ -182,13 +182,13 @@ class CapstoneTestCase(unittest.TestCase):
         self.assertFalse(data['success'])
     #################################################
     def TestDeleteAcotr_ExecutiveProducertoken(self):
-        respo = self.client().delete('/actors/8', headers={'Authorization': "Bearer {}".format(self.ExecutiveProducer_token)})
+        respo = self.client().delete('/actors/8', headers={'Authorization': "Bearer {}".format(self.eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImE3N05VZHZ4bC1veldYNVR5NEtmcCJ9.eyJpc3MiOiJodHRwczovL2Rldi1qZHNsa3htOC51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWZmZGQwZTMzMjI1ZjkwMDc3Y2Y3NGFiIiwiYXVkIjoiY2Fwc3RvbmUiLCJpYXQiOjE2MTEwMjEwNzAsImV4cCI6MTYxMTAyODI3MCwiYXpwIjoidGRoMHdpY1dTajhrV2RYa1B6cE00Zm10NldHb2FuMmEiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvcnMiLCJkZWxldGU6bW92aWVzIiwiZ2V0OmFjdG9ycyAiLCJnZXQ6bW92aWVzIiwicG9zdDphY3RvcnMiLCJwb3N0Om1vdmllcyIsInVwZGF0ZTphY3RvcnMgIiwidXBkYXRlOm1vdmllcyJdfQ.BwxUeJS6W2t-Pfs0VlhehoYZl1-vb1HJtA0ELObg3I_sNXQvvh4bSUvHqdt-EkOW7wN1tV9-E27xBPzkw2my7uU6X_dTpYHcddpSYq8Z9lWJrDJDpLKzgMEMu-Yk0rGfuz-FzWAnhRrlLj3lxNEAP0PjSXNvnwKGRgvZ1Hpb1pcYfWhhGktT8r5NiIaov8PMz1FA3PeClOWZSkZnTqmz-gwYPl8VNc4omeXNwFeaULCE823Me2XGaYpfsLUuIb1NG0hp0ETNKdozclni0lHKu6lRHJOGdbGcC_csZnx1HZC01sGMsKa5A1cYtsMkXa8atqlOCA9BjduOgtxZ0OwK4g)})
         data = json.loads(respo.data)
         self.assertEqual(respo.status_code, 401)
         self.assertFalse(data["success"])
         self.assertIn('message', data)
       def TestDeleteMovie_ExecutiveProducertoken(self):
-        respo = self.client().delete('/movies/1', headers={'Authorization': "Bearer {}".format(self.ExecutiveProducer_token)})
+        respo = self.client().delete('/movies/1', headers={'Authorization': "Bearer {}".format(self.eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImE3N05VZHZ4bC1veldYNVR5NEtmcCJ9.eyJpc3MiOiJodHRwczovL2Rldi1qZHNsa3htOC51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWZmZGQwZTMzMjI1ZjkwMDc3Y2Y3NGFiIiwiYXVkIjoiY2Fwc3RvbmUiLCJpYXQiOjE2MTEwMjEwNzAsImV4cCI6MTYxMTAyODI3MCwiYXpwIjoidGRoMHdpY1dTajhrV2RYa1B6cE00Zm10NldHb2FuMmEiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvcnMiLCJkZWxldGU6bW92aWVzIiwiZ2V0OmFjdG9ycyAiLCJnZXQ6bW92aWVzIiwicG9zdDphY3RvcnMiLCJwb3N0Om1vdmllcyIsInVwZGF0ZTphY3RvcnMgIiwidXBkYXRlOm1vdmllcyJdfQ.BwxUeJS6W2t-Pfs0VlhehoYZl1-vb1HJtA0ELObg3I_sNXQvvh4bSUvHqdt-EkOW7wN1tV9-E27xBPzkw2my7uU6X_dTpYHcddpSYq8Z9lWJrDJDpLKzgMEMu-Yk0rGfuz-FzWAnhRrlLj3lxNEAP0PjSXNvnwKGRgvZ1Hpb1pcYfWhhGktT8r5NiIaov8PMz1FA3PeClOWZSkZnTqmz-gwYPl8VNc4omeXNwFeaULCE823Me2XGaYpfsLUuIb1NG0hp0ETNKdozclni0lHKu6lRHJOGdbGcC_csZnx1HZC01sGMsKa5A1cYtsMkXa8atqlOCA9BjduOgtxZ0OwK4g)})
         data = json.loads(respo.data)
         self.assertEqual(respo.status_code, 401)
         self.assertFalse(data["success"])

@@ -1,13 +1,41 @@
-#FSND :
+# FSND :
+The Capstone project is about Casting Agency that supports a basic casting agency by allowing users to query the database for movies and actors.
 
-
-#final project for the Udacity Full Stack Developer Nano Degree.
+## final project for the Udacity Full Stack Developer Nano Degree.
  This casting agency project contains three different user roles and related permissions	
 - Casting Assistant: Can view actors and movies
 - Casting Director:	Can view actors and movies,Add or delete an actor,Modify actors or movies
 - Executive Producer: Have All permissions
 
-#Endpoins:
+## Installation
+### python 3.8
+Follow instructions to install the latest version of python for your platform in the [python docs] (https://docs.python.org/3/using/index.html)
+
+### Virtual Enviornment 
+Recommend working within a virtual environment whenever using Python for projects. This keeps your dependencies for each project separate and organaized.
+
+### PIP Dependencies
+Once you have your virtual environment setup and running, install dependencies by running:
+```bash
+pip install -r requirements.txt
+```
+
+### Running the server
+From within the root directory, first ensure you're working with your created
+venv. To run the server, execute the following:
+```bash
+export FLASK_APP=app.py
+export FLASK_DEBUG=true
+export FLASK_ENV=development
+flask run
+```
+Or you can use 
+```bash
+python -m flask run 
+```
+instead of flask run if you faced any problems.
+
+## Endpoins:
 - GET /actors and /movies
 http://127.0.0.1:5000/actors 
 ```json
@@ -137,7 +165,18 @@ ________________
 }
 ________________
 ```
+## Testing
+For testing the backend, run the following commands :
 
-# Access project in Heroku URL:
+dropdb capstone
+createdb capstone
+psql capstone < casting.sql
+python test.py
+
+## Access project in Heroku URL:
 ( https://afrafsnd.herokuapp.com/ )
+
+## Access project locally:
+( http://127.0.0.1:5000/ )
+
 
