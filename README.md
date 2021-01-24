@@ -1,11 +1,30 @@
-# FSND :
-The Capstone project is about Casting Agency that supports a basic casting agency by allowing users to query the database for movies and actors.
-
+# FSND 
 ## final project for the Udacity Full Stack Developer Nano Degree.
- This casting agency project contains three different user roles and related permissions	
-- Casting Assistant: Can view actors and movies
-- Casting Director:	Can view actors and movies,Add or delete an actor,Modify actors or movies
-- Executive Producer: Have All permissions
+
+### Motivation for project
+1. I have working with all skills that i have learnt through this valuable course.
+In this project, Foucsing on How to write a clean code, Relational Database Architecture, Modeling Data Objects with SQLAlchemy, Developing a Flask API, Authentication and Access, Authentication with Auth0, RBAC, And Deploying Applications.
+
+2. This casting agency project contains three different user roles and related permissions
+- Casting Assistant :
+  - Can view actors and movies.
+- Casting Director :	
+  - Can view actors and movies,Add or delete an actor,Modify actors or movies.
+- Executive Producer : 
+  - Have All permissions.
+
+## Setup Auth0
+1. Create an Account Then Select a unique tenant domain after that Create web application
+and continue by Creating a new API, The go ahead and chang api settings(Enable RBAC
+Enable Add Permissions in the Access Token ).
+2. Next step is Creating an API permissions. 
+3. third step is to Create roles for our three users.
+
+#### In Postman we can test our endpoints
+1. First we have to make sure that we have register our three users and assign each with its own roles.
+2. We have to take a valid Token by Sign into each account and make note of the JWT.
+3. Run each endpoint individually and do the test. 
+
 
 ## Installation
 ### python 3.8
@@ -165,13 +184,14 @@ ________________
 }
 ________________
 ```
-## Testing
-For testing the backend, run the following commands :
 
-dropdb capstone
-createdb capstone
-psql capstone < casting.sql
+## Testing
+* note : Token will be invaled after a certain time, So it must be refreshed. 
+For testing the backend, run the following commands :
+```bash
+source setup.sh
 python test.py
+```
 
 ## Access project in Heroku URL:
 ( https://afrafsnd.herokuapp.com/ )

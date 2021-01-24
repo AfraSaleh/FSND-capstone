@@ -5,27 +5,18 @@ from jose import jwt
 from urllib.request import urlopen
 import os
 
+
 AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
 ALGORITHMS = os.environ['ALGORITHMS']
 API_AUDIENCE =  os.environ['API_AUDIENCE']
 
-AUTH0_DOMAIN='dev-jdslkxm8.us.auth0.com'
-ALGORITHMS=['RS256']
-API_AUDIENCE='capstone'
-CLIENT_ID='tdh0wicWSj8kWdXkPzpM4fmt6WGoan2a'
 
-## AuthError Exception
-'''
-AuthError Exception
-A standardized way to communicate auth failure modes
-'''
 class AuthError(Exception):
     def __init__(self, error, status_code):
         self.error = error
         self.status_code = status_code
 
 
-## Auth Header
 def get_token_auth_header():
     AuthHeader = request.headers.get('Authorization', None)
     if not AuthHeader:
@@ -52,6 +43,7 @@ def get_token_auth_header():
     token = parts[1]
     return token
 
+
 def check_permissions(permission, payload):
     if 'permissions' not in payload:
         abort(400)
@@ -60,7 +52,6 @@ def check_permissions(permission, payload):
     return True
 
 
-##Udacity Lesson 2 @ Practice - Validating Auth0 Tokens
 def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
@@ -81,7 +72,6 @@ def verify_decode_jwt(token):
                 'n': key['n'],
                 'e': key['e']
             }
-    
     if rsa_key:
         try:
             payload = jwt.decode(
@@ -100,7 +90,8 @@ def verify_decode_jwt(token):
         except jwt.JWTClaimsError:
             raise AuthError({
                 'code': 'invalid_claims',
-                'description': 'Incorrect claims. Please, check the audience and issuer.'
+                'description':
+                'Incorrect claims. Please, check the audience and issuer.'
             }, 401)
         except Exception:
             raise AuthError({
@@ -111,6 +102,7 @@ def verify_decode_jwt(token):
                 'code': 'invalid_header',
                 'description': 'Unable to find the appropriate key.'
             }, 400)
+
 
 def requires_auth(permission=''):
     def requires_auth_decorator(f):
